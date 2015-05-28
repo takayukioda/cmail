@@ -77,7 +77,7 @@ if (process.argv[2] === 'refresh') {
 
 if (process.argv[2] === 'labels') {
   var tokens = JSON.parse(fs.readFileSync(',/token.json'));
-  var endpoint = 'https://www.googleapis.com/gmail/v1/users/me/labels'
+  var endpoint = 'https://www.googleapis.com/gmail/v1/users/me/labels';
   var params = {
     access_token: tokens.access_token,
     prettyPrint: true

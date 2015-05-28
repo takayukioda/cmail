@@ -10,7 +10,9 @@
     "readline-sync": "^1.2.17",
     "request": "^2.55.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "jshint": "^2.7.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
