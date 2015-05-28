@@ -1,0 +1,29 @@
+{
+  "name": "cmail",
+  "version": "0.1.0",
+  "description": "Command line tool for gMAIL",
+  "preferGlobal": true,
+  "bin": {
+    "cmail": "index.js"
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/da0shi/cmail"
+  },
+  "keywords": [
+    "google",
+    "gmail",
+    "cli"
+  ],
+  "author": "da0shi",
+  "license": "MIT License",
+  "bugs": {
+    "url": "https://github.com/da0shi/cmail/issues"
+  },
+  "homepage": "https://github.com/da0shi/cmail"
+}
