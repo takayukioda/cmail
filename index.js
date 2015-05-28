@@ -104,7 +104,20 @@ if (process.argv[2] === 'labels') {
       console.log("Body:", body);
       return false;
     }
-    console.log(body.labels);
+    var sysLabels = body.labels.filter(function (item) {
+      return item.type === 'system';
+    });
+    var usrLabels = body.labels.filter(function (item) {
+      return item.type === 'user';
+    });
+    console.log("System Labels");
+    sysLabels.forEach(function (item) {
+      console.log(item.id, ':', item.name);
+    });
+    console.log("User Labels");
+    usrLabels.forEach(function (item) {
+      console.log(item.id, ':', item.name);
+    });
   });
 
 }
