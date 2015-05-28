@@ -55,3 +55,32 @@ if (process.argv[2] === 'token') {
     fs.writeFileSync(',/token.json', JSON.stringify(body));
   });
 }
+
+if (process.argv[2] === 'refresh') {
+  var config = JSON.parse(fs.readFileSync(',/config.json')).installed;
+  var tokens = JSON.parse(fs.readFileSync(',/token.json'));
+  var endpoint = 'https://www.googleapis.com/oauth2/v3/token';
+  var params = {
+    grant_type: 'refresh_token',
+    client_id: config.client_id,
+    client_secret: config.client_secret,
+    refresh_token: tokens.refresh_token
+  };
+  var options = {
+    uri: endpoint,
+    form: params,
+    json: true
+  };
+  request.post(options, function (error, response, body) {
+    if (response.statusCode !== 200) {
+      console.log("Error:", error);
+      console.log("Status code:", response.statusCode);
+      console.log("Body:", body);
+      return false;
+    }
+    tokens.access_token = body.access_token;
+    tokens.expires_in = body.expires_in;
+    tokens.token_type = body.token_type;
+    fs.writeFileSync(',/token.json', JSON.stringify(tokens));
+  });
+}
