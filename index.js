@@ -13,6 +13,6 @@ if (process.argv[2] === 'home') {
 }
 
 if (process.argv[2] === 'init') {
-  var config = JSON.parse(fs.readFileSync(',/config.json'));
+  var config = JSON.parse(fs.readFileSync(',/config.json')).installed;
   console.log(config);
 }
