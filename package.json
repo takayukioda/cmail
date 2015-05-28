@@ -6,7 +6,10 @@
   "bin": {
     "cmail": "index.js"
   },
-  "dependencies": {},
+  "dependencies": {
+    "readline-sync": "^1.2.17",
+    "request": "^2.55.0"
+  },
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
