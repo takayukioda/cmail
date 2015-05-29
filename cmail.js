@@ -19,6 +19,14 @@ Cmail.prototype.config = function (key) {
   return this._config;
 };
 
+Cmail.prototype.token = function (key) {
+  if (this._token === null) {
+    this._token = JSON.parse(fs.readFileSync(this.token_file));
+  }
+  if (key !== undefined) { return this._token[key]; }
+  return this._token;
+};
+
 Cmail.prototype.save_token = function (token) {
   fs.writeFileSync(this.token_file, JSON.stringify(token));
 }

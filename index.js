@@ -49,13 +49,12 @@ if (process.argv[2] === 'token') {
 }
 
 if (process.argv[2] === 'refresh') {
-  var tokens = JSON.parse(fs.readFileSync(cmail.token_file));
   var endpoint = 'https://www.googleapis.com/oauth2/v3/token';
   var params = {
     grant_type: 'refresh_token',
     client_id: cmail.config('client_id'),
     client_secret: cmail.config('client_secret'),
-    refresh_token: tokens.refresh_token
+    refresh_token: cmail.token('refresh_token')
   };
   var options = {
     uri: endpoint,
@@ -74,10 +73,9 @@ if (process.argv[2] === 'refresh') {
 }
 
 if (process.argv[2] === 'labels') {
-  var tokens = JSON.parse(fs.readFileSync(cmail.token_file));
   var endpoint = 'https://www.googleapis.com/gmail/v1/users/me/labels';
   var params = {
-    access_token: tokens.access_token,
+    access_token: cmail.token('access_token'),
     prettyPrint: true
   };
   var options = {
