@@ -19,7 +19,7 @@ if (process.argv[2] === 'auth') {
     state: 'some random string haha'
   };
   var uri = cmail.config('auth_uri') +'?'+ querystring.encode(params);
-  console.log(uri);
+  require('open')(uri);
 }
 
 if (process.argv[2] === 'token') {

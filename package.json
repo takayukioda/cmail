@@ -7,6 +7,7 @@
     "cmail": "index.js"
   },
   "dependencies": {
+    "open": "0.0.5",
     "readline-sync": "^1.2.17",
     "request": "^2.55.0"
   },
