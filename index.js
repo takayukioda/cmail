@@ -4,7 +4,6 @@ var cmail = require('./cmail')({
   config_file: ',/config.json',
   token_file: ',/token.json',
 });
-var fs = require('fs');
 var querystring = require('querystring');
 var readline = require('readline-sync');
 var request = require('request');
