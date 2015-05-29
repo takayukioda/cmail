@@ -23,6 +23,13 @@ Cmail.prototype.save_token = function (token) {
   fs.writeFileSync(this.token_file, JSON.stringify(token));
 }
 
+Cmail.prototype.refresh_token = function (refresh) {
+    this._token.access_token = refresh.access_token;
+    this._token.expires_in   = refresh.expires_in;
+    this._token.token_type   = refresh.token_type;
+    this.save_token(this._token);
+};
+
 module.exports = function (env) {
   return new Cmail(env.config_file, env.token_file);
 };

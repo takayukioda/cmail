@@ -69,10 +69,7 @@ if (process.argv[2] === 'refresh') {
       console.log("Body:", body);
       return false;
     }
-    tokens.access_token = body.access_token;
-    tokens.expires_in = body.expires_in;
-    tokens.token_type = body.token_type;
-    cmail.save_token(tokens);
+    cmail.refresh_token(body);
   });
 }
 
