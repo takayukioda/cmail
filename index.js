@@ -104,5 +104,30 @@ if (process.argv[2] === 'labels') {
       console.log(item.id, ':', item.name);
     });
   });
-
 }
+
+if (process.argv[2] === 'unread') {
+  var endpoint = 'https://www.googleapis.com/gmail/v1/users/me/messages';
+  var params = {
+    maxResults: 5,
+    labelIds: 'UNREAD',
+    access_token: cmail.token('access_token'),
+    prettyPrint: true
+  };
+  var options = {
+    uri: endpoint,
+    qs: params,
+    json: true
+  };
+  request.get(options, function (error, response, body) {
+    if (response.statusCode !== 200) {
+      console.log("Error:", error);
+      console.log("Status code:", response.statusCode);
+      console.log("Body:", body);
+      return false;
+    }
+
+    console.log(body);
+  });
+}
+
