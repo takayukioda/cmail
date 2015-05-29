@@ -15,7 +15,7 @@ if (process.argv[2] === 'auth') {
     approval_prompt: 'force',
     client_id: cmail.config('client_id'),
     redirect_uri: cmail.config('redirect_uris')[0],
-    scope: 'https://www.googleapis.com/auth/gmail.labels',
+    scope: 'https://www.googleapis.com/auth/gmail.labels https://www.googleapis.com/auth/gmail.readonly',
     state: 'some random string haha'
   };
   var uri = cmail.config('auth_uri') +'?'+ querystring.encode(params);
