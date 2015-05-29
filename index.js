@@ -44,7 +44,7 @@ if (process.argv[2] === 'token') {
       console.log("Body:", body);
       return false;
     }
-    fs.writeFileSync(cmail.token_file, JSON.stringify(body));
+    cmail.save_token(body);
   });
 }
 
@@ -72,7 +72,7 @@ if (process.argv[2] === 'refresh') {
     tokens.access_token = body.access_token;
     tokens.expires_in = body.expires_in;
     tokens.token_type = body.token_type;
-    fs.writeFileSync(cmail.token_file, JSON.stringify(tokens));
+    cmail.save_token(tokens);
   });
 }
 

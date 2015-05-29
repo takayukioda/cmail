@@ -19,6 +19,10 @@ Cmail.prototype.config = function (key) {
   return this._config;
 };
 
+Cmail.prototype.save_token = function (token) {
+  fs.writeFileSync(this.token_file, JSON.stringify(token));
+}
+
 module.exports = function (env) {
   return new Cmail(env.config_file, env.token_file);
 };
