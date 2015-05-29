@@ -1,37 +1,39 @@
 #!/usr/bin/env node
 'use strict';
+var cmail = require('./cmail')({
+  config_file: ',/config.json',
+  token_file: ',/token.json',
+});
 var fs = require('fs');
 var querystring = require('querystring');
 var readline = require('readline-sync');
 var request = require('request');
 
 if (process.argv[2] === 'auth') {
-  var config = JSON.parse(fs.readFileSync(',/config.json')).installed;
   var params = {
     response_type: 'code',
     access_type: 'offline',
     approval_prompt: 'force',
-    client_id: config.client_id,
-    redirect_uri: config.redirect_uris[0],
+    client_id: cmail.config('client_id'),
+    redirect_uri: cmail.config('redirect_uris')[0],
     scope: 'https://www.googleapis.com/auth/gmail.labels',
     state: 'some random string haha'
   };
-  var uri = config.auth_uri +'?'+ querystring.encode(params);
+  var uri = cmail.config('auth_uri') +'?'+ querystring.encode(params);
   console.log(uri);
 }
 
 if (process.argv[2] === 'token') {
-  var config = JSON.parse(fs.readFileSync(',/config.json')).installed;
   var code = readline.question('Input returned code: ');
   var params = {
     grant_type: 'authorization_code',
     code: code,
-    client_id: config.client_id,
-    client_secret: config.client_secret,
-    redirect_uri: config.redirect_uris[0]
+    client_id: cmail.config('client_id'),
+    client_secret: cmail.config('client_secret'),
+    redirect_uri: cmail.config('redirect_uris')[0]
   };
   var options = {
-    uri: config.token_uri,
+    uri: cmail.config('token_uri'),
     form: params,
     json: true
   };
@@ -42,18 +44,17 @@ if (process.argv[2] === 'token') {
       console.log("Body:", body);
       return false;
     }
-    fs.writeFileSync(',/token.json', JSON.stringify(body));
+    fs.writeFileSync(cmail.token_file, JSON.stringify(body));
   });
 }
 
 if (process.argv[2] === 'refresh') {
-  var config = JSON.parse(fs.readFileSync(',/config.json')).installed;
-  var tokens = JSON.parse(fs.readFileSync(',/token.json'));
+  var tokens = JSON.parse(fs.readFileSync(cmail.token_file));
   var endpoint = 'https://www.googleapis.com/oauth2/v3/token';
   var params = {
     grant_type: 'refresh_token',
-    client_id: config.client_id,
-    client_secret: config.client_secret,
+    client_id: cmail.config('client_id'),
+    client_secret: cmail.config('client_secret'),
     refresh_token: tokens.refresh_token
   };
   var options = {
@@ -71,12 +72,12 @@ if (process.argv[2] === 'refresh') {
     tokens.access_token = body.access_token;
     tokens.expires_in = body.expires_in;
     tokens.token_type = body.token_type;
-    fs.writeFileSync(',/token.json', JSON.stringify(tokens));
+    fs.writeFileSync(cmail.token_file, JSON.stringify(tokens));
   });
 }
 
 if (process.argv[2] === 'labels') {
-  var tokens = JSON.parse(fs.readFileSync(',/token.json'));
+  var tokens = JSON.parse(fs.readFileSync(cmail.token_file));
   var endpoint = 'https://www.googleapis.com/gmail/v1/users/me/labels';
   var params = {
     access_token: tokens.access_token,
