@@ -29,7 +29,7 @@ Cmail.prototype.token = function (key) {
 
 Cmail.prototype.save_token = function (token) {
   fs.writeFileSync(this.token_file, JSON.stringify(token));
-}
+};
 
 Cmail.prototype.refresh_token = function (refresh) {
     this._token.access_token = refresh.access_token;
