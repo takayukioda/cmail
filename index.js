@@ -127,6 +127,10 @@ if (process.argv[2] === 'unread') {
       return false;
     }
 
+    if (body.messages === undefined) {
+      console.log("No unread messages");
+      return true;
+    }
     body.messages.forEach(function (item) {
       var endpoint = 'https://www.googleapis.com/gmail/v1/users/me/messages/' + item.id;
       var params = {
