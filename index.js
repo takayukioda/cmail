@@ -146,7 +146,7 @@ if (process.argv[2] === 'unread') {
           console.log("Body:", body);
           return false;
         }
-        console.log(body);
+        console.log(body.snippet);
       });
     });
   });
