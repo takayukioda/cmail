@@ -150,7 +150,9 @@ if (process.argv[2] === 'unread') {
           console.log("Body:", body);
           return false;
         }
-        console.log(body.snippet);
+        console.log('Snippet:', body.snippet);
+        console.log('url: ', 'https://mail.google.com/mail/u/0/#all/'+ body.id);
+        console.log('');
       });
     });
   });
