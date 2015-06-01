@@ -53,7 +53,7 @@ Cmail.prototype.get_auth_url = function () {
   return this.config('auth_uri') +'?'+ querystring.encode(params);
 };
 
-Cmail.prototype.get_token = function (code) {
+Cmail.prototype.request_token = function (code) {
   var self = this;
   var params = {
     grant_type: 'authorization_code',

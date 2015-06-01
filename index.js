@@ -12,7 +12,7 @@ if (process.argv[2] === 'auth') {
   var uri = cmail.get_auth_url();
   require('open')(uri);
   var code = readline.question('Input returned code: ');
-  cmail.get_token(code);
+  cmail.request_token(code);
 }
 
 if (process.argv[2] === 'refresh') {
