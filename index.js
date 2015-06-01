@@ -9,42 +9,12 @@ var readline = require('readline-sync');
 var request = require('request');
 
 if (process.argv[2] === 'auth') {
-  var params = {
-    response_type: 'code',
-    access_type: 'offline',
-    approval_prompt: 'force',
-    client_id: cmail.config('client_id'),
-    redirect_uri: cmail.config('redirect_uris')[0],
-    scope: 'https://www.googleapis.com/auth/gmail.labels https://www.googleapis.com/auth/gmail.readonly',
-    state: 'some random string haha'
-  };
-  var uri = cmail.config('auth_uri') +'?'+ querystring.encode(params);
-  require('open')(uri);
+  cmail.authorize();
 }
 
 if (process.argv[2] === 'token') {
   var code = readline.question('Input returned code: ');
-  var params = {
-    grant_type: 'authorization_code',
-    code: code,
-    client_id: cmail.config('client_id'),
-    client_secret: cmail.config('client_secret'),
-    redirect_uri: cmail.config('redirect_uris')[0]
-  };
-  var options = {
-    uri: cmail.config('token_uri'),
-    form: params,
-    json: true
-  };
-  request.post(options, function (error, response, body) {
-    if (response.statusCode !== 200) {
-      console.log("Error:", error);
-      console.log("Status code:", response.statusCode);
-      console.log("Body:", body);
-      return false;
-    }
-    cmail.save_token(body);
-  });
+  cmail.getToken(code);
 }
 
 if (process.argv[2] === 'refresh') {

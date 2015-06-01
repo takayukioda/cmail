@@ -2,7 +2,9 @@
   * @author da0shi
   */
 'use strict';
-var fs = require('fs');
+var fs          = require('fs'),
+    request     = require('request'),
+    querystring = require('querystring');
 
 function Cmail (config_file, token_file) {
   this.config_file = config_file;
@@ -36,6 +38,45 @@ Cmail.prototype.refresh_token = function (refresh) {
     this._token.expires_in   = refresh.expires_in;
     this._token.token_type   = refresh.token_type;
     this.save_token(this._token);
+};
+
+Cmail.prototype.authorize = function () {
+  var params = {
+    response_type: 'code',
+    access_type: 'offline',
+    approval_prompt: 'force',
+    client_id: this.config('client_id'),
+    redirect_uri: this.config('redirect_uris')[0],
+    scope: 'https://www.googleapis.com/auth/gmail.labels https://www.googleapis.com/auth/gmail.readonly',
+    state: 'some random string haha'
+  };
+  var uri = this.config('auth_uri') +'?'+ querystring.encode(params);
+  require('open')(uri);
+};
+
+Cmail.prototype.getToken = function (code) {
+  var self = this;
+  var params = {
+    grant_type: 'authorization_code',
+    code: code,
+    client_id: this.config('client_id'),
+    client_secret: this.config('client_secret'),
+    redirect_uri: this.config('redirect_uris')[0]
+  };
+  var options = {
+    uri: this.config('token_uri'),
+    form: params,
+    json: true
+  };
+  request.post(options, function (error, response, body) {
+    if (response.statusCode !== 200) {
+      console.log("Error:", error);
+      console.log("Status code:", response.statusCode);
+      console.log("Body:", body);
+      return false;
+    }
+    self.save_token(body);
+  });
 };
 
 module.exports = function (env) {
