@@ -11,9 +11,6 @@ var request = require('request');
 if (process.argv[2] === 'auth') {
   var uri = cmail.getAuthUrl();
   require('open')(uri);
-}
-
-if (process.argv[2] === 'token') {
   var code = readline.question('Input returned code: ');
   cmail.getToken(code);
 }
