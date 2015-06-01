@@ -40,7 +40,7 @@ Cmail.prototype.refresh_token = function (refresh) {
     this.save_token(this._token);
 };
 
-Cmail.prototype.getAuthUrl = function () {
+Cmail.prototype.get_auth_url = function () {
   var params = {
     response_type: 'code',
     access_type: 'offline',
@@ -53,7 +53,7 @@ Cmail.prototype.getAuthUrl = function () {
   return this.config('auth_uri') +'?'+ querystring.encode(params);
 };
 
-Cmail.prototype.getToken = function (code) {
+Cmail.prototype.get_token = function (code) {
   var self = this;
   var params = {
     grant_type: 'authorization_code',

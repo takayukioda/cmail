@@ -9,10 +9,10 @@ var readline = require('readline-sync');
 var request = require('request');
 
 if (process.argv[2] === 'auth') {
-  var uri = cmail.getAuthUrl();
+  var uri = cmail.get_auth_url();
   require('open')(uri);
   var code = readline.question('Input returned code: ');
-  cmail.getToken(code);
+  cmail.get_token(code);
 }
 
 if (process.argv[2] === 'refresh') {
