@@ -78,6 +78,31 @@ Cmail.prototype.request_token = function (code) {
   });
 };
 
+Cmail.prototype.request_refresh = function () {
+  var self = this;
+  var endpoint = 'https://www.googleapis.com/oauth2/v3/token';
+  var params = {
+    grant_type: 'refresh_token',
+    client_id: self.config('client_id'),
+    client_secret: self.config('client_secret'),
+    refresh_token: self.token('refresh_token')
+  };
+  var options = {
+    uri: endpoint,
+    form: params,
+    json: true
+  };
+  request.post(options, function (error, response, body) {
+    if (response.statusCode !== 200) {
+      console.log("Error:", error);
+      console.log("Status code:", response.statusCode);
+      console.log("Body:", body);
+      return false;
+    }
+    self.refresh_token(body);
+  });
+};
+
 module.exports = function (env) {
   return new Cmail(env.config_file, env.token_file);
 };

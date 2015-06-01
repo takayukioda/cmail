@@ -16,27 +16,7 @@ if (process.argv[2] === 'auth') {
 }
 
 if (process.argv[2] === 'refresh') {
-  var endpoint = 'https://www.googleapis.com/oauth2/v3/token';
-  var params = {
-    grant_type: 'refresh_token',
-    client_id: cmail.config('client_id'),
-    client_secret: cmail.config('client_secret'),
-    refresh_token: cmail.token('refresh_token')
-  };
-  var options = {
-    uri: endpoint,
-    form: params,
-    json: true
-  };
-  request.post(options, function (error, response, body) {
-    if (response.statusCode !== 200) {
-      console.log("Error:", error);
-      console.log("Status code:", response.statusCode);
-      console.log("Body:", body);
-      return false;
-    }
-    cmail.refresh_token(body);
-  });
+  cmail.request_refresh();
 }
 
 if (process.argv[2] === 'labels') {
