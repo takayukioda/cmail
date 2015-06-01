@@ -9,7 +9,8 @@ var readline = require('readline-sync');
 var request = require('request');
 
 if (process.argv[2] === 'auth') {
-  cmail.authorize();
+  var uri = cmail.getAuthUrl();
+  require('open')(uri);
 }
 
 if (process.argv[2] === 'token') {

@@ -40,7 +40,7 @@ Cmail.prototype.refresh_token = function (refresh) {
     this.save_token(this._token);
 };
 
-Cmail.prototype.authorize = function () {
+Cmail.prototype.getAuthUrl = function () {
   var params = {
     response_type: 'code',
     access_type: 'offline',
@@ -50,8 +50,7 @@ Cmail.prototype.authorize = function () {
     scope: 'https://www.googleapis.com/auth/gmail.labels https://www.googleapis.com/auth/gmail.readonly',
     state: 'some random string haha'
   };
-  var uri = this.config('auth_uri') +'?'+ querystring.encode(params);
-  require('open')(uri);
+  return this.config('auth_uri') +'?'+ querystring.encode(params);
 };
 
 Cmail.prototype.getToken = function (code) {
