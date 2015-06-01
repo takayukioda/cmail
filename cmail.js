@@ -9,6 +9,7 @@ var fs          = require('fs'),
 function Cmail (config_file, token_file) {
   this.config_file = config_file;
   this.token_file = token_file;
+  this.api_base_uri = 'https://www.googleapis.com/gmail/v1';
   this._config = null;
   this._token = null;
 }
@@ -58,12 +59,12 @@ Cmail.prototype.request_token = function (code) {
   var params = {
     grant_type: 'authorization_code',
     code: code,
-    client_id: this.config('client_id'),
-    client_secret: this.config('client_secret'),
-    redirect_uri: this.config('redirect_uris')[0]
+    client_id: self.config('client_id'),
+    client_secret: self.config('client_secret'),
+    redirect_uri: self.config('redirect_uris')[0]
   };
   var options = {
-    uri: this.config('token_uri'),
+    uri: self.config('token_uri'),
     form: params,
     json: true
   };
