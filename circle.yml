@@ -5,4 +5,4 @@ test:
   override:
     - echo "My branch is ${CIRCLE_BRANCH}"
     - date:
-      branch: master
+        branch: master
