@@ -1,0 +1,7 @@
+machine:
+  node: 4.1.0
+test:
+  override:
+    - echo "My branch is ${CIRCLE_BRANCH}"
+    - date:
+      branch: master
